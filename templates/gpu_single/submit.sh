@@ -10,7 +10,7 @@
 #SBATCH --output=%x_%j.out
 #SBATCH --error=%x_%j.err
 
-cd "$SLURM_SUBMIT_DIR"
+cd "${SLURM_SUBMIT_DIR:?SLURM_SUBMIT_DIR is not set}" || { echo "Error: Failed to change directory to SLURM_SUBMIT_DIR ($SLURM_SUBMIT_DIR)" >&2; exit 1; }
 echo "Starting GPU job on $HOSTNAME. Assigned GPU(s): $CUDA_VISIBLE_DEVICES"
 
 # Load your environment here
