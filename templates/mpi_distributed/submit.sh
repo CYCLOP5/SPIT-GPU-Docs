@@ -9,7 +9,7 @@
 #SBATCH --output=%x_%j.out
 #SBATCH --error=%x_%j.err
 
-cd "$SLURM_SUBMIT_DIR"
+cd "${SLURM_SUBMIT_DIR:-$PWD}" || exit 1
 echo "Starting MPI job with $SLURM_NTASKS tasks."
 
 # Load MPI module if available, then run
