@@ -15,6 +15,13 @@ cd "$SLURM_SUBMIT_DIR"
 CONTAINER="my_container.sif"
 SCRIPT="train.py"
 
+# Guard against running with placeholder values
+if [ "$CONTAINER" = "my_container.sif" ] || [ "$SCRIPT" = "train.py" ]; then
+    echo "ERROR: Please set CONTAINER and SCRIPT to real paths before running this template."
+    echo "       Current CONTAINER=\"$CONTAINER\" SCRIPT=\"$SCRIPT\""
+    exit 1
+fi
+
 echo "Running $SCRIPT inside $CONTAINER on $HOSTNAME"
 # --nv flag binds the host GPUs into the container
-apptainer exec --nv $CONTAINER python $SCRIPT
+apptainer exec --nv "$CONTAINER" python "$SCRIPT"
